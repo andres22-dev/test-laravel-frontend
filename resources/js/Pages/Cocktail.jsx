@@ -1,7 +1,23 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import Card from '@/Components/CardCocktail';
 
 export default function Cocktail({ auth }) {
+
+const [cocktails, setCocktails] = useState([]);
+
+useEffect(() => {
+    axios.get('www.thecocktaildb.com/api/json/v1/1/search.php?f=margarita')
+    .then(response => {
+        setCocktails(response.data); // guardas la lista de cocktails
+    })
+    .catch(error => {
+        console.error('Error fetching cocktails:', error);
+    });
+    }, []);
+
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -12,10 +28,23 @@ export default function Cocktail({ auth }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">You're logged in two three four!</div>
+                        <div className="p-6 text-gray-900">I'm first code in laravel
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
+                            {cocktails.map(cocktail => (
+                            <Card
+                                key={cocktail.id}
+                                title={cocktail.name}
+                                description={cocktail.description}
+                            />
+                            ))}
+                            </div>  
+                        </div>
+                        
                     </div>
                 </div>
             </div>
+        
+        
         </AuthenticatedLayout>
     );
 }
