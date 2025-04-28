@@ -8,7 +8,7 @@ export default function Cocktail({ auth }) {
 const [cocktails, setCocktails] = useState([]);
 
 useEffect(() => {
-    axios.get('www.thecocktaildb.com/api/json/v1/1/search.php?f=margarita')
+    axios.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?i=vodka')
     .then(response => {
         setCocktails(response.data); // guardas la lista de cocktails
     })
