@@ -1,8 +1,9 @@
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
 
-export default function CocktailHandling() {
+export default function CocktailHandling({auth}) {
   const [cocktails, setCocktails] = useState([]);
 
   useEffect(() => {
@@ -61,7 +62,11 @@ export default function CocktailHandling() {
   };
 
   return (
-    <div className="p-6">
+    <AuthenticatedLayout
+      user={auth.user}
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Data Center Cocktails</h2>}
+    >
+      <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Manage Cocktails</h1>
       <DataTable
         columns={columns}
@@ -69,5 +74,7 @@ export default function CocktailHandling() {
         pagination
       />
     </div>
+
+    </AuthenticatedLayout>
   );
 }

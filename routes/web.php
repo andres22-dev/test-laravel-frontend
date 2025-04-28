@@ -38,9 +38,15 @@ Route::get('/cocktails', function() {
     
     return response()->json($response->json());
 });
+
 Route::get('/cocktail', function () {
     return Inertia::render('Cocktail');
 })->middleware(['auth', 'verified'])->name('cocktail');
+
+
+Route::get('/cocktailmain', function () {
+    return Inertia::render('CocktailHandling');
+})->middleware(['auth', 'verified'])->name('cocktailhandling');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
