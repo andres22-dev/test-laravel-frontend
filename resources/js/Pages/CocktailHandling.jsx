@@ -17,6 +17,18 @@ export default function CocktailHandling({auth}) {
   const [showModal, setShowModal] = useState(false);
   const [currentCocktail, setCurrentCocktail] = useState({ id: null, name: '', category: '', instructions: '', image: ''});
 
+  const customStyles = {
+    table: {
+      style: {
+        minWidth: '1000px', 
+      },
+    },
+    tableWrapper: {
+      style: {
+        overflowX: 'auto', 
+      },
+    },
+  };
 
   useEffect(() => {
     fetchCocktails();
@@ -66,10 +78,10 @@ export default function CocktailHandling({auth}) {
 };
 
   const columns = [
-    { name: 'Name', selector: row => row.name, sortable: true },
-    { name: 'Category', selector: row => row.category },
-    { name: 'Instructions', selector: row => row.instructions },
-    { name: 'Image', selector: row => row.image },
+    { name: 'Name', selector: row => row.name, sortable: true, wrap:true,  width: '400px'},
+    { name: 'Category', selector: row => row.category, wrap:true,  width: '400px'},
+    { name: 'Instructions', selector: row => row.instructions, wrap:true, width: '500px' },
+    { name: 'Image', selector: row => row.image, wrap:true,  width: '400px'},
 
     
     {
@@ -102,13 +114,18 @@ export default function CocktailHandling({auth}) {
       user={auth.user}
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Data Center Cocktails</h2>}
     >
-      <div className="p-6">
+      <div className="p-6 ">
       <h1 className="text-2xl font-bold mb-4">Manage Cocktails</h1>
-      <DataTable
+    
+        <DataTable
+        
         columns={columns}
         data={cocktails}
         pagination
-      />
+        customStyles={customStyles} 
+        />
+    
+      
       {/* Modal */}
       {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -127,7 +144,7 @@ export default function CocktailHandling({auth}) {
                         <div className="mb-4">
                             <label className="block text-gray-700">Category:</label>
                             <input
-                                name="instructions"
+                                name="category"
                                 value={currentCocktail.category}
                                 onChange={handleInputChange}
                                 className="w-full border p-2 rounded"
