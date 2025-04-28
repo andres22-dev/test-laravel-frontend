@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CocktailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/cocktails', [CocktailController::class, 'index']);
+Route::delete('/cocktails/{id}', [CocktailController::class, 'destroy']);
+Route::put('/cocktails/{id}', [CocktailController::class, 'update']);
+Route::post('cocktails', [CocktailController::class, 'store']);
