@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 
 export default function CardCocktail({ title, description, category, img }) {
@@ -18,10 +19,20 @@ export default function CardCocktail({ title, description, category, img }) {
               });
   
               if (response.status === 201) {
-                  alert('Cóctel guardado con éxito!');
+                Swal.fire({
+                  title: '¡Éxito!',
+                  text: 'El cóctel se ha guardado correctamente.',
+                  icon: 'success',
+                  confirmButtonText: 'Ok',
+                });
               }
           } catch (error) {
-              console.error('Error al guardar el cóctel:', error);
+              Swal.fire({
+                title: '¡Error!',
+                text: 'Hubo un problema al guardar el cóctel.',
+                icon: 'error',
+                confirmButtonText: 'Intentar de nuevo',
+              });
               setErrorMessage('Hubo un error al guardar el cóctel.');
           } finally {
               setIsSaving(false);
