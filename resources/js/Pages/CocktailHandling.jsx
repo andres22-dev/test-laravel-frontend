@@ -14,6 +14,7 @@ import axios from 'axios';
  */
 export default function CocktailHandling({auth}) {
   const [cocktails, setCocktails] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [currentCocktail, setCurrentCocktail] = useState({ id: null, name: '', category: '', instructions: '', image: ''});
 
 
@@ -72,8 +73,7 @@ export default function CocktailHandling({auth}) {
   ];
 
   const handleEdit = (id) => {
-    console.log('Edit cocktail', id);
-    setCurrentCocktail(cocktail);
+    setCurrentCocktail(id);
     setShowModal(true);
   };
 
@@ -89,8 +89,47 @@ export default function CocktailHandling({auth}) {
         data={cocktails}
         pagination
       />
-
-      
+      {/* Modal */}
+      {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded shadow-lg w-96">
+                        <h2 className="text-xl font-semibold mb-4">Edit Cocktail</h2>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Name:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={currentCocktail.name}
+                                onChange={handleInputChange}
+                                className="w-full border p-2 rounded"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Instructions:</label>
+                            <textarea
+                                name="instructions"
+                                value={currentCocktail.instructions}
+                                onChange={handleInputChange}
+                                className="w-full border p-2 rounded"
+                            />
+                        </div>
+                        <div className="flex justify-end">
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="mr-2 px-4 py-2 bg-gray-300 rounded"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleUpdate}
+                                className="px-4 py-2 bg-blue-500 text-white rounded"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
     </div>
 
     </AuthenticatedLayout>
