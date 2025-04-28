@@ -12,16 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cocktails', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-
-        Schema::create('cocktails', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); // Nombre del cóctel
-            $table->text('instructions')->nullable(); // Instrucciones de preparación
-            $table->string('image')->nullable(); // Imagen del cóctel
-            $table->timestamps();
+        $table->id();
+        $table->string('name'); 
+        $table->string('category')->nullable();
+        $table->text('instructions')->nullable();
+        $table->string('image')->nullable();
+        $table->timestamps();
         });
     }
 
