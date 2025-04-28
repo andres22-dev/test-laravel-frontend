@@ -3,8 +3,19 @@ import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
 
+
+/*
+
+  { name: 'Name', selector: row => row.name, sortable: true },
+    { name: 'Category', selector: row => row.category },
+    { name: 'Instructions', selector: row => row.instructions },
+    { name: 'Image', selector: row => row.image },
+
+ */
 export default function CocktailHandling({auth}) {
   const [cocktails, setCocktails] = useState([]);
+  const [currentCocktail, setCurrentCocktail] = useState({ id: null, name: '', category: '', instructions: '', image: ''});
+
 
   useEffect(() => {
     fetchCocktails();
@@ -62,6 +73,8 @@ export default function CocktailHandling({auth}) {
 
   const handleEdit = (id) => {
     console.log('Edit cocktail', id);
+    setCurrentCocktail(cocktail);
+    setShowModal(true);
   };
 
   return (
@@ -76,6 +89,8 @@ export default function CocktailHandling({auth}) {
         data={cocktails}
         pagination
       />
+
+      
     </div>
 
     </AuthenticatedLayout>
