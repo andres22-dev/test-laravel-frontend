@@ -32,8 +32,8 @@ export default function CocktailHandling({auth}) {
       });
   };
 
-  const handleEdit = (id) => {
-    setCurrentCocktail(id);
+  const handleEdit = (cocktail) => {
+    setCurrentCocktail(cocktail);
     setShowModal(true);
   };
   const handleInputChange = (e) => {
@@ -53,6 +53,17 @@ export default function CocktailHandling({auth}) {
         });
     }
   };
+
+  const handleUpdate = () => {
+    axios.put(`/api/cocktails/${currentCocktail.id}`, currentCocktail)
+        .then(() => {
+            setShowModal(false);
+            fetchCocktails();
+        })
+        .catch(error => {
+            console.error('Error updating cocktail:', error);
+        });
+};
 
   const columns = [
     { name: 'Name', selector: row => row.name, sortable: true },
@@ -84,16 +95,7 @@ export default function CocktailHandling({auth}) {
 
 
 
-const handleUpdate = () => {
-    axios.put(`/api/cocktails/${currentCocktail.id}`, currentCocktail)
-        .then(() => {
-            setShowModal(false);
-            fetchCocktails();
-        })
-        .catch(error => {
-            console.error('Error updating cocktail:', error);
-        });
-};
+
 
   return (
     <AuthenticatedLayout
