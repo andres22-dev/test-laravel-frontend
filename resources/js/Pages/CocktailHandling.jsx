@@ -2,16 +2,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
-
-/*
-
-  { name: 'Name', selector: row => row.name, sortable: true },
-    { name: 'Category', selector: row => row.category },
-    { name: 'Instructions', selector: row => row.instructions },
-    { name: 'Image', selector: row => row.image },
-
- */
 export default function CocktailHandling({auth}) {
   const [cocktails, setCocktails] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -54,15 +46,43 @@ export default function CocktailHandling({auth}) {
         [e.target.name]: e.target.value,
     });
 };
-  const handleDelete = (id) => {
-    if (confirm('Are you sure you want to delete this cocktail?')) {
+
+const showQuestionAlert = (id) => {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: '¿Quieres eliminar este cóctel?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, Eliminar',
+    cancelButtonText: 'No, No lo Elimines del Menu',
+  }).then((result) => {
+    if (result.isConfirmed) {
       axios.delete(`/api/cocktails/${id}`)
         .then(() => {
-          fetchCocktails(); 
+          fetchCocktails();
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'El cóctel se ha editado correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
         })
         .catch(error => {
-          console.error('Error deleting cocktail:', error);
+          Swal.fire({
+            title: '¡Error!',
+            text: 'Hubo un problema al guardar el cóctel.',
+            icon: 'error',
+            confirmButtonText: 'Intentar de nuevo',
+          });
         });
+    } else {
+      console.log('El cóctel no se guardó');
+    }
+  });
+};
+  const handleDelete = (id) => {
+    if (showQuestionAlert(id)) {
+
     }
   };
 
@@ -71,9 +91,20 @@ export default function CocktailHandling({auth}) {
         .then(() => {
             setShowModal(false);
             fetchCocktails();
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'El cóctel se ha editado correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Ok',
+            });
         })
         .catch(error => {
-            console.error('Error updating cocktail:', error);
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Hubo un problema al guardar el cóctel.',
+              icon: 'error',
+              confirmButtonText: 'Intentar de nuevo',
+            });
         });
 };
 
