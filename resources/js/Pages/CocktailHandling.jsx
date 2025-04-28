@@ -11,9 +11,9 @@ export default function CocktailHandling({auth}) {
   }, []);
 
   const fetchCocktails = () => {
-    axios.get('/cocktails') 
+    axios.get('/api/cocktails') 
       .then(response => {
-        setCocktails(response.data.drinks);
+        setCocktails(response.data);
       })
       .catch(error => {
         console.error('Error fetching cocktails:', error);
@@ -24,7 +24,7 @@ export default function CocktailHandling({auth}) {
     if (confirm('Are you sure you want to delete this cocktail?')) {
       axios.delete(`/api/cocktails/${id}`)
         .then(() => {
-          fetchCocktails(); // Vuelve a cargar la lista
+          fetchCocktails(); 
         })
         .catch(error => {
           console.error('Error deleting cocktail:', error);
@@ -34,7 +34,11 @@ export default function CocktailHandling({auth}) {
 
   const columns = [
     { name: 'Name', selector: row => row.name, sortable: true },
+    { name: 'Category', selector: row => row.category },
     { name: 'Instructions', selector: row => row.instructions },
+    { name: 'Image', selector: row => row.image },
+
+    
     {
       name: 'Actions',
       cell: row => (
@@ -57,7 +61,6 @@ export default function CocktailHandling({auth}) {
   ];
 
   const handleEdit = (id) => {
-    // Puedes redirigir o abrir un modal para editar
     console.log('Edit cocktail', id);
   };
 
