@@ -32,6 +32,16 @@ export default function CocktailHandling({auth}) {
       });
   };
 
+  const handleEdit = (id) => {
+    setCurrentCocktail(id);
+    setShowModal(true);
+  };
+  const handleInputChange = (e) => {
+    setCurrentCocktail({
+        ...currentCocktail,
+        [e.target.name]: e.target.value,
+    });
+};
   const handleDelete = (id) => {
     if (confirm('Are you sure you want to delete this cocktail?')) {
       axios.delete(`/api/cocktails/${id}`)
@@ -56,7 +66,7 @@ export default function CocktailHandling({auth}) {
       cell: row => (
         <>
           <button
-            onClick={() => handleEdit(row.id)}
+            onClick={() => handleEdit(row)}
             className="text-blue-500 mr-2"
           >
             Edit
@@ -72,16 +82,7 @@ export default function CocktailHandling({auth}) {
     }
   ];
 
-  const handleEdit = (id) => {
-    setCurrentCocktail(id);
-    setShowModal(true);
-  };
-  const handleInputChange = (e) => {
-    setCurrentCocktail({
-        ...currentCocktail,
-        [e.target.name]: e.target.value,
-    });
-};
+
 
 const handleUpdate = () => {
     axios.put(`/api/cocktails/${currentCocktail.id}`, currentCocktail)
