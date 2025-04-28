@@ -28,7 +28,7 @@ export default function Authenticated({ user, header, children }) {
                                     Cocktail
                                 </NavLink>
                                 <NavLink href={route('cocktailhandling')} active={route().current('cocktailhandling')}>
-                                    Cocktail
+                                    Cocktail Data
                                 </NavLink>
                             </div>
                         </div>
