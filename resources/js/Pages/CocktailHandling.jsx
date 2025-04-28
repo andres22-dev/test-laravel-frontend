@@ -76,6 +76,23 @@ export default function CocktailHandling({auth}) {
     setCurrentCocktail(id);
     setShowModal(true);
   };
+  const handleInputChange = (e) => {
+    setCurrentCocktail({
+        ...currentCocktail,
+        [e.target.name]: e.target.value,
+    });
+};
+
+const handleUpdate = () => {
+    axios.put(`/api/cocktails/${currentCocktail.id}`, currentCocktail)
+        .then(() => {
+            setShowModal(false);
+            fetchCocktails();
+        })
+        .catch(error => {
+            console.error('Error updating cocktail:', error);
+        });
+};
 
   return (
     <AuthenticatedLayout
@@ -105,10 +122,28 @@ export default function CocktailHandling({auth}) {
                             />
                         </div>
                         <div className="mb-4">
+                            <label className="block text-gray-700">Category:</label>
+                            <input
+                                name="instructions"
+                                value={currentCocktail.category}
+                                onChange={handleInputChange}
+                                className="w-full border p-2 rounded"
+                            />
+                        </div>
+                        <div className="mb-4">
                             <label className="block text-gray-700">Instructions:</label>
                             <textarea
                                 name="instructions"
                                 value={currentCocktail.instructions}
+                                onChange={handleInputChange}
+                                className="w-full border p-2 rounded"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700">Image:</label>
+                            <input
+                                name="instructions"
+                                value={currentCocktail.image}
                                 onChange={handleInputChange}
                                 className="w-full border p-2 rounded"
                             />
