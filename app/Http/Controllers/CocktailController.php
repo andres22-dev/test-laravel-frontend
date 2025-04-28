@@ -32,6 +32,7 @@ public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
             'instructions' => 'required|string',
             'image' => 'nullable|string',
         ]);

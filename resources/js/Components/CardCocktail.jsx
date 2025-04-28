@@ -12,8 +12,8 @@ export default function CardCocktail({ title, description, category, img }) {
           try {
               const response = await axios.post('/api/cocktails', {
                   name: title,  
-                  category: description,
-                  instructions: category,  
+                  category: category,
+                  instructions: description,  
                   image: img,  
               });
   
