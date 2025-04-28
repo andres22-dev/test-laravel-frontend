@@ -11,7 +11,7 @@ useEffect(() => {
     axios.get('/cocktails')
     .then(response => {
         console.log(response)
-        setCocktails(response.data); // guardas la lista de cocktails
+        setCocktails(response.data.drinks); // guardas la lista de cocktails
         
     })
     .catch(error => {
@@ -33,6 +33,17 @@ useEffect(() => {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">I'm first code in laravel
                         
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
+                            {cocktails.map(cocktail => (
+                            <Card
+                                key={cocktail.idDrink}
+                                title={cocktail.strDrink}
+                                category={cocktail.strCategory}
+                                description={cocktail.strInstructions}
+                                img={cocktail.strDrinkThumb}
+                            />
+                            ))}
+                            </div>  
                         </div>
                         
                     </div>
