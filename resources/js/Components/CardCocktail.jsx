@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+
 export default function CardCocktail({ title, description, category, img }) {
 
   const [isSaving, setIsSaving] = useState(false);
@@ -31,7 +33,12 @@ export default function CardCocktail({ title, description, category, img }) {
       <h2 className="text-xl font-bold mb-2">{title}</h2>
       <h3>{category}</h3>
       <img src={img} alt="a" />
-      <p className="text-gray-700">{description}</p>
+
+      <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out focus:outline-none" onClick={saveCocktail} disabled={isSaving} >
+                {isSaving ? 'Guardando...' : 'Guardar cóctel'}
+      </button>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    
     </div>
   );
 }

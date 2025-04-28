@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/cocktails', [CocktailController::class, 'index']);
 Route::delete('/cocktails/{id}', [CocktailController::class, 'destroy']);
 Route::put('/cocktails/{id}', [CocktailController::class, 'update']);
+Route::post('cocktails', [CocktailController::class, 'store']);

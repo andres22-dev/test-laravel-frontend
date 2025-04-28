@@ -22,11 +22,25 @@ class CocktailController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $cocktail = Cocktail::findOrFail($id);
+    {
+        $cocktail = Cocktail::findOrFail($id);
+        $cocktail->update($request->only('name', 'category', 'instructions', 'image'));
+        return response()->json(['message' => 'Cocktail updated successfully']);
+    }
 
-    $cocktail->update($request->only('name', 'category', 'instructions', 'image'));
+public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'instructions' => 'required|string',
+            'image' => 'nullable|string',
+        ]);
 
-    return response()->json(['message' => 'Cocktail updated successfully']);
-}
+        $cocktail = Cocktail::create($validated);
+
+        return response()->json([
+            'message' => 'Cóctel creado correctamente',
+            'cocktail' => $cocktail,
+        ], 201);
+    }
 }
